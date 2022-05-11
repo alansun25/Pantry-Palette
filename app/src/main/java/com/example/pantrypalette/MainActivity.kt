@@ -3,23 +3,12 @@ package com.example.pantrypalette
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.pantrypalette.adapters.IngredientAdapter
-import com.example.pantrypalette.api.RecipesAPI
-import com.example.pantrypalette.api.RecipesResult
 import com.example.pantrypalette.databinding.ActivityMainBinding
 import com.example.pantrypalette.touch.IngredientRecyclerTouchCallback
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 import java.io.InputStream
-import java.lang.reflect.GenericArrayType
 
 class MainActivity : AppCompatActivity() {
 

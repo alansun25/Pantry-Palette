@@ -2,10 +2,8 @@ package com.example.pantrypalette
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pantrypalette.adapters.RecipeAdapter
 import com.example.pantrypalette.api.RecipesAPI
 import com.example.pantrypalette.api.RecipesResult
 import com.example.pantrypalette.databinding.ActivityRecipeListBinding
@@ -18,11 +16,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RecipeListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeListBinding
+    private lateinit var adapter: RecipeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initRecyclerView()
     }
 
     override fun onResume() {
@@ -57,6 +58,14 @@ class RecipeListActivity : AppCompatActivity() {
                     // there is a "get(0)". We want all the returned recipes so
                     // ideally you would loop through them all to get the data you
                     // want to display.
+
+//                    if (body != null) {
+//                        for (recipe in body) {
+//                            val recRes: RecipeResult = RecipeResult("Title")
+//                            binding.recipeTitle.text = body?.get(0)?.title.toString()
+//                        }
+//                    }
+
                 } catch (t: Throwable) {
                     // TODO
                 }
@@ -71,4 +80,10 @@ class RecipeListActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun initRecyclerView() {
+        adapter = RecipeAdapter(this)
+        binding.recyclerRecipes.adapter = adapter
+    }
+
 }
