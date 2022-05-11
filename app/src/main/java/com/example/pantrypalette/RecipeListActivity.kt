@@ -3,6 +3,7 @@ package com.example.pantrypalette
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pantrypalette.adapters.IngredientAdapter
 import com.example.pantrypalette.adapters.RecipeAdapter
 import com.example.pantrypalette.api.RecipesAPI
 import com.example.pantrypalette.api.RecipesResult
@@ -48,32 +49,22 @@ class RecipeListActivity : AppCompatActivity() {
                 response: Response<List<RecipesResult>>
             ) {
                 try {
+                    adapter.clear()
                     val body = response.body()
-
-                    // TODO: Update adapter and frontend with response
-
-                    // This is how you get recipe name from API response:
-                    // body?.get(0)?.title.toString()
-                    // Note: The response is an array of recipes, which is why
-                    // there is a "get(0)". We want all the returned recipes so
-                    // ideally you would loop through them all to get the data you
-                    // want to display.
-
-//                    if (body != null) {
-//                        for (recipe in body) {
-//                            val recRes: RecipeResult = RecipeResult("Title")
-//                            binding.recipeTitle.text = body?.get(0)?.title.toString()
-//                        }
-//                    }
-
+                    if (body != null) {
+                        for (recipe in body) {
+                            adapter.addRecipe(recipe)
+                        }
+                        adapter.submitList(adapter.recipes)
+                    }
                 } catch (t: Throwable) {
-                    // TODO
+                    binding.test.text = "ERROR"
                 }
             }
 
             override fun onFailure(call: Call<List<RecipesResult>>, t: Throwable) {
                 try {
-                    // TODO
+                    binding.test.text = "ERROR"
                 } catch (t: Throwable) {
                     Log.e("Error", "Failure")
                 }
@@ -85,5 +76,4 @@ class RecipeListActivity : AppCompatActivity() {
         adapter = RecipeAdapter(this)
         binding.recyclerRecipes.adapter = adapter
     }
-
 }

@@ -12,7 +12,7 @@ import com.example.pantrypalette.touch.IngredientTouchHelperCallback
 import com.example.pantrypalette.databinding.IngredientBinding
 
 class IngredientAdapter(var context: Context) :
-    ListAdapter<Ingredient, IngredientAdapter.ViewHolder>(DiffCallback()),
+    ListAdapter<Ingredient, IngredientAdapter.ViewHolder>(IngredientDiffCallback()),
     IngredientTouchHelperCallback {
 
     val selectedIngredients = mutableListOf<Ingredient>()
@@ -56,7 +56,7 @@ class IngredientAdapter(var context: Context) :
     }
 }
 
-class DiffCallback : DiffUtil.ItemCallback<Ingredient>() {
+class IngredientDiffCallback : DiffUtil.ItemCallback<Ingredient>() {
     override fun areItemsTheSame(oldItem: Ingredient, newItem: Ingredient): Boolean {
         return oldItem.name == newItem.name
     }
