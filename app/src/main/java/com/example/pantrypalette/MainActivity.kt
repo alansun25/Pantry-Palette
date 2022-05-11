@@ -3,6 +3,9 @@ package com.example.pantrypalette
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import com.example.pantrypalette.api.IngredientsResult
 import com.example.pantrypalette.api.RecipesAPI
 import com.example.pantrypalette.api.RecipesResult
 import com.example.pantrypalette.databinding.ActivityMainBinding
@@ -11,6 +14,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.io.InputStream
+import java.lang.reflect.GenericArrayType
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
@@ -18,49 +24,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
-    // TODO: Put the list of recipes returned by the response in a separate activity
-    override fun onResume() {
-        super.onResume()
+        // Read list of all ingredients
+        val inputStream: InputStream = resources.openRawResource(R.raw.ingredients_list)
+        val allIngredients = mutableListOf<String>()
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.spoonacular.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        // Create ingredient list for auto-complete
+        inputStream.bufferedReader().forEachLine {
+            val ingredient = it.split(";")[0]
+            allIngredients.add(ingredient)
+        }
 
-        val recipesAPI = retrofit.create(RecipesAPI::class.java)
-
-        val call = recipesAPI.getRecipes(
-            // TODO: Make this based on user query (only ingredients).
-            "chicken,cheese,strawberry",
-            3
+        // Set auto-complete adapter
+        val ingredientAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            allIngredients
         )
+        binding.actvIngredient.setAdapter(ingredientAdapter)
 
-        call.enqueue(object : Callback<List<RecipesResult>> {
-            override fun onResponse(
-                call: Call<List<RecipesResult>>,
-                response: Response<List<RecipesResult>>
-            ) {
-                try {
-                    val body = response.body()
-
-                    // TODO: Update frontend with response
-
-                    // binding.recipeName.text = body?.get(0)?.title.toString() + "," + body?.get(1)?.title.toString()
-                    // binding.usedIngred.text = body?.get(0)?.usedIngredients?.get(0)?.name.toString() + "," + body?.get(0)?.usedIngredients?.get(1)?.name.toString()
-                } catch (t: Throwable) {
-                    binding.recipeName.text = "$t"
-                }
-            }
-
-            override fun onFailure(call: Call<List<RecipesResult>>, t: Throwable) {
-                try {
-                    binding.recipeName.text = "$t"
-                } catch (t: Throwable) {
-                    Log.e("Error", "Failure")
-                }
-            }
-        })
+        // TODO: Add ingredient to recycler view when clicked in adapter
     }
 }
