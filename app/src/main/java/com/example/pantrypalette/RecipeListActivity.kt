@@ -21,7 +21,6 @@ class RecipeListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityRecipeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
@@ -36,9 +35,9 @@ class RecipeListActivity : AppCompatActivity() {
 
         val recipesAPI = retrofit.create(RecipesAPI::class.java)
 
+        // Find recipes from API based on user's ingredients
         val call = recipesAPI.getRecipes(
-            // TODO: Make this based on user query (only ingredients).
-            "chicken,cheese,strawberry",
+            intent.getStringExtra(MainActivity.INGREDIENTS).toString(),
             3
         )
 
@@ -50,10 +49,14 @@ class RecipeListActivity : AppCompatActivity() {
                 try {
                     val body = response.body()
 
-                    // TODO: Update frontend with response
+                    // TODO: Update adapter and frontend with response
 
-                    // binding.recipeName.text = body?.get(0)?.title.toString() + "," + body?.get(1)?.title.toString()
-                    // binding.usedIngred.text = body?.get(0)?.usedIngredients?.get(0)?.name.toString() + "," + body?.get(0)?.usedIngredients?.get(1)?.name.toString()
+                    // This is how you get recipe name from API response:
+                    // body?.get(0)?.title.toString()
+                    // Note: The response is an array of recipes, which is why
+                    // there is a "get(0)". We want all the returned recipes so
+                    // ideally you would loop through them all to get the data you
+                    // want to display.
                 } catch (t: Throwable) {
                     // TODO
                 }
