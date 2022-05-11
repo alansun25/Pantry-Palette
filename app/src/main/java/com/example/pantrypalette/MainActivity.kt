@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         )
         binding.actvIngredient.setAdapter(ingredientAdapter)
 
-        // TODO: Add selected ingredient to ingredient list
         binding.actvIngredient.setOnItemClickListener { adapterView, view, position, id ->
             // Get selected ingredient and clear search bar upon selection
             val ingredient = adapterView.getItemAtPosition(position).toString()
