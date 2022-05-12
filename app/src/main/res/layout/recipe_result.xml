@@ -10,6 +10,7 @@
     card_view:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemRecipe"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:background="#F8EEEE">

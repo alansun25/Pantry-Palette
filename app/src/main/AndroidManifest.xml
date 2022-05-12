@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PantryPalette">
         <activity
+            android:name=".RecipeInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".RecipeListActivity"
             android:exported="false" />
         <activity

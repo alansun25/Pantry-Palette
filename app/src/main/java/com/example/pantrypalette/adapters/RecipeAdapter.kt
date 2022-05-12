@@ -2,6 +2,7 @@ package com.example.pantrypalette.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,12 +10,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pantrypalette.Ingredient
+import com.example.pantrypalette.RecipeInfoActivity
 import com.example.pantrypalette.RecipeListActivity
 import com.example.pantrypalette.api.RecipesResult
 import com.example.pantrypalette.databinding.RecipeResultBinding
 import retrofit2.Callback
 
 class RecipeAdapter(var context: Context) : ListAdapter<RecipesResult, RecipeAdapter.ViewHolder>(RecipeDiffCallback()) {
+
+    companion object {
+        const val RECIPE = "RECIPE"
+    }
 
     val recipes = mutableListOf<RecipesResult>()
 
@@ -25,6 +31,13 @@ class RecipeAdapter(var context: Context) : ListAdapter<RecipesResult, RecipeAda
             Glide.with(context)
                 .load(rec.image)
                 .into(binding.recipeImg)
+
+            binding.itemRecipe.setOnClickListener {
+                val intentDetails = Intent()
+                intentDetails.setClass(context, RecipeInfoActivity::class.java)
+                intentDetails.putExtra(RECIPE, rec.id.toString())
+                context.startActivity(intentDetails)
+            }
         }
     }
 
