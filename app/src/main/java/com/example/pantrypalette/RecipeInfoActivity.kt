@@ -1,19 +1,22 @@
 package com.example.pantrypalette
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.pantrypalette.adapters.RecipeAdapter
 import com.example.pantrypalette.api.RecipeInfoResult
 import com.example.pantrypalette.api.RecipesAPI
-import com.example.pantrypalette.api.RecipesResult
 import com.example.pantrypalette.databinding.ActivityRecipeInfoBinding
+import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class RecipeInfoActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecipeInfoBinding
@@ -36,8 +39,7 @@ class RecipeInfoActivity : AppCompatActivity() {
 
         // Find recipes from API based on user's ingredients
         val call = recipesAPI.getRecipeDetails(
-            intent.getStringExtra(RecipeAdapter.RECIPE)!!.toInt(),
-            false
+            intent.getStringExtra(RecipeAdapter.RECIPE)!!.toInt()
         )
 
         call.enqueue(object : Callback<RecipeInfoResult> {
@@ -48,13 +50,20 @@ class RecipeInfoActivity : AppCompatActivity() {
                 try {
                     val body = response.body()
 
-                    Log.d("RESPONSE", "${body?.title}")
-
                     binding.tvRecipeTitle.text = body?.title
-                    binding.tvSummary.text = body?.summary
+                    binding.tvSummary.text = Jsoup.parse(body?.summary).text()
+
                     Glide.with(this@RecipeInfoActivity)
                         .load(body?.image)
                         .into(binding.imgRecipe)
+
+                    binding.tvSource.text = "Source: ${body?.sourceName}"
+
+                    binding.btnURL.setOnClickListener {
+                        val browserIntent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse(body?.sourceUrl))
+                        startActivity(browserIntent)
+                    }
 
                 } catch (t: Throwable) {
                     // TODO

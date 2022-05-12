@@ -18,6 +18,7 @@ interface RecipesAPI {
     @GET("/recipes/{id}/information")
     fun getRecipeDetails(
         @Path("id") id: Number,
-        @Query("includeNutrition") includeNutrition: Boolean = false
+        @Query("includeNutrition") includeNutrition: Boolean = false,
+        @Query("apiKey") apiKey: String = "15b09f702e814d61aa246bea72ed737b"
     ) : Call<RecipeInfoResult>
 }

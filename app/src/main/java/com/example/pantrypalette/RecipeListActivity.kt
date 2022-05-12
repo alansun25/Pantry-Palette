@@ -40,7 +40,7 @@ class RecipeListActivity : AppCompatActivity() {
         // Find recipes from API based on user's ingredients
         val call = recipesAPI.getRecipes(
             intent.getStringExtra(MainActivity.INGREDIENTS).toString(),
-            7
+            2
         )
 
         call.enqueue(object : Callback<List<RecipesResult>> {
