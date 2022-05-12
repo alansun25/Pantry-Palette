@@ -20,7 +20,8 @@ class RecipeAdapter(var context: Context) : ListAdapter<RecipesResult, RecipeAda
 
     inner class ViewHolder(private var binding: RecipeResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(rec: RecipesResult) {
-            binding.recipeTitle.text = rec.title
+            val title = rec.title?.split(" ")?.joinToString(separator = " ", transform = String::capitalize)
+            binding.recipeTitle.text = title
             Glide.with(context)
                 .load(rec.image)
                 .into(binding.recipeImg)
@@ -37,9 +38,9 @@ class RecipeAdapter(var context: Context) : ListAdapter<RecipesResult, RecipeAda
         holder.bind(item)
     }
 
-    fun addRecipe(r: RecipesResult) {
-        recipes.add(r)
-        notifyItemInserted(recipes.indexOf(r))
+    fun addRecipes(r: List<RecipesResult>) {
+        recipes.addAll(r)
+        //notifyItemInserted(recipes.indexOf(r))
     }
 
     fun clear() {

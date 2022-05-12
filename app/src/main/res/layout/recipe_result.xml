@@ -11,12 +11,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="139dp"
+        android:layout_height="125dp"
         android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/recipeImg"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="100dp"
             android:layout_marginStart="28dp"
             android:backgroundTint="#00FF3030"
@@ -31,19 +31,19 @@
             android:id="@+id/recipeTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:maxLines="2"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="3"
             android:text="Title"
             android:textColor="#070707"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="1.0"
             card_view:layout_constraintStart_toEndOf="@+id/recipeImg"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.392" />
+            card_view:layout_constraintVertical_bias="0.387" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

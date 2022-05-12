@@ -40,7 +40,7 @@ class RecipeListActivity : AppCompatActivity() {
         // Find recipes from API based on user's ingredients
         val call = recipesAPI.getRecipes(
             intent.getStringExtra(MainActivity.INGREDIENTS).toString(),
-            3
+            7
         )
 
         call.enqueue(object : Callback<List<RecipesResult>> {
@@ -52,19 +52,17 @@ class RecipeListActivity : AppCompatActivity() {
                     adapter.clear()
                     val body = response.body()
                     if (body != null) {
-                        for (recipe in body) {
-                            adapter.addRecipe(recipe)
-                        }
+                        adapter.addRecipes(body)
                         adapter.submitList(adapter.recipes)
                     }
                 } catch (t: Throwable) {
-                    binding.test.text = "ERROR"
+                    // TODO
                 }
             }
 
             override fun onFailure(call: Call<List<RecipesResult>>, t: Throwable) {
                 try {
-                    binding.test.text = "ERROR"
+                    // TODO
                 } catch (t: Throwable) {
                     Log.e("Error", "Failure")
                 }

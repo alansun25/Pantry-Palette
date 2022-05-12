@@ -55,7 +55,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnFindRecipes.setOnClickListener {
             val intentDetails = Intent()
 
-            val selectedIngredients = adapter.selectedIngredients.joinToString()
+            var selectedIngredients = ""
+            adapter.selectedIngredients.forEach {
+                selectedIngredients += "${it.name},+"
+            }
 
             intentDetails.setClass(this, RecipeListActivity::class.java)
             intentDetails.putExtra(INGREDIENTS, selectedIngredients)
