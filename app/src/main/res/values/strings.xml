@@ -6,5 +6,6 @@
     <string name="search">Search...</string>
     <string name="pantry">Your Pantry</string>
     <string name="findRecipes">Find Recipes</string>
+    <string name="view">View Recipe</string>
 
 </resources>
