@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
-    android:layout_width="350dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     card_view:cardBackgroundColor="#F3F2EC"
@@ -10,7 +10,7 @@
     card_view:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="#F8EEEE">
 
@@ -30,7 +30,7 @@
             android:id="@+id/btnDel"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="6dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/custom_button"

@@ -13,9 +13,7 @@
         android:theme="@style/Theme.PantryPalette">
         <activity
             android:name=".RecipeListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_recipe_list"
-            android:theme="@style/Theme.PantryPalette.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

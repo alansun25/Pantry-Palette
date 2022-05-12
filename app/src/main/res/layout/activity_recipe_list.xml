@@ -14,7 +14,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:textSize="24sp"
-        android:text="Recipes Found" />
+        android:textColor="#31554D"
+        android:textStyle="italic"
+        android:text="@string/recipes_found" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRecipes"
@@ -22,6 +24,8 @@
         app:layout_behavior=
             "com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:padding="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

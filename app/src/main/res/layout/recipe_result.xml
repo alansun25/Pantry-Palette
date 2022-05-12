@@ -6,18 +6,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     card_view:cardBackgroundColor="#F3F2EC"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="15dp"
     card_view:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:background="#FFFFFF">
+        android:background="#F8EEEE">
 
         <ImageView
             android:id="@+id/recipeImg"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
+            android:layout_width="130dp"
+            android:layout_height="105dp"
             android:layout_marginStart="28dp"
             android:backgroundTint="#00FF3030"
             android:padding="10dp"
@@ -34,10 +34,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:maxLines="3"
-            android:text="Title"
-            android:textColor="#070707"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text="@string/title"
+            android:textColor="#3A3A3A"
+            android:textSize="15sp"
+            android:textStyle="italic"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="1.0"
