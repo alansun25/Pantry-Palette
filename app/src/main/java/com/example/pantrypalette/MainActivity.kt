@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.pantrypalette.adapters.IngredientAdapter
+import com.example.pantrypalette.data.AppDatabase
+import com.example.pantrypalette.data.Ingredient
 import com.example.pantrypalette.databinding.ActivityMainBinding
 import com.example.pantrypalette.touch.IngredientRecyclerTouchCallback
 import java.io.InputStream
@@ -46,8 +49,8 @@ class MainActivity : AppCompatActivity() {
             // Get selected ingredient and clear search bar upon selection
             val ingredient = adapterView.getItemAtPosition(position).toString()
             binding.actvIngredient.text.clear()
-            adapter.addIngredient(Ingredient(ingredient))
-            adapter.submitList(adapter.selectedIngredients)
+            adapter.addIngredient(Ingredient(null, ingredient))
+            // adapter.submitList(adapter.selectedIngredients)
         }
 
         initRecyclerView()
@@ -73,5 +76,10 @@ class MainActivity : AppCompatActivity() {
         val touchCallbackList = IngredientRecyclerTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(touchCallbackList)
         itemTouchHelper.attachToRecyclerView(binding.recyclerIngredients)
+
+        val ingredients = AppDatabase.getInstance(this).ingredientDao().getAll()
+        ingredients.observe(this, Observer { items ->
+            adapter.submitList(items)
+        })
     }
 }
