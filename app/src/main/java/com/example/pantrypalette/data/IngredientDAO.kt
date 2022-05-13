@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface IngredientDAO {
     @Query("SELECT * FROM ingredientList")
-    fun getAll() : LiveData<List<Ingredient>>
+    fun getAll() : List<Ingredient>
 
     @Insert
     fun addIngredient(ingr: Ingredient)

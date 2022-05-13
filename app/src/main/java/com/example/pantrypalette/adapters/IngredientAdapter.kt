@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pantrypalette.MainActivity
 import com.example.pantrypalette.data.AppDatabase
 import com.example.pantrypalette.data.Ingredient
 import com.example.pantrypalette.touch.IngredientTouchHelperCallback
@@ -16,8 +17,6 @@ import kotlin.concurrent.thread
 class IngredientAdapter(var context: Context) :
     ListAdapter<Ingredient, IngredientAdapter.ViewHolder>(IngredientDiffCallback()),
     IngredientTouchHelperCallback {
-
-    // val selectedIngredients = mutableListOf<Ingredient>()
 
     inner class ViewHolder(private var binding: IngredientBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ingr: Ingredient) {
@@ -42,15 +41,23 @@ class IngredientAdapter(var context: Context) :
     fun addIngredient(ingr: Ingredient) {
         thread {
             AppDatabase.getInstance(context).ingredientDao().addIngredient(ingr)
+            val ingredients = AppDatabase.getInstance(context).ingredientDao().getAll()
+
+            (context as MainActivity).runOnUiThread {
+                this.submitList(ingredients)
+            }
         }
-        // selectedIngredients.add(ingr)
     }
 
     fun deleteIngr(idx: Int) {
         thread {
             AppDatabase.getInstance(context).ingredientDao().deleteIngredient(getItem(idx))
+            val ingredients = AppDatabase.getInstance(context).ingredientDao().getAll()
+
+            (context as MainActivity).runOnUiThread {
+                this.submitList(ingredients)
+            }
         }
-        // selectedIngredients.removeAt(idx)
     }
 
     override fun onDismissed(position: Int) {

@@ -3,9 +3,7 @@ package com.example.pantrypalette
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.pantrypalette.adapters.IngredientAdapter
 import com.example.pantrypalette.data.AppDatabase
@@ -13,6 +11,7 @@ import com.example.pantrypalette.data.Ingredient
 import com.example.pantrypalette.databinding.ActivityMainBinding
 import com.example.pantrypalette.touch.IngredientRecyclerTouchCallback
 import java.io.InputStream
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,39 +50,40 @@ class MainActivity : AppCompatActivity() {
             val ingredient = adapterView.getItemAtPosition(position).toString()
             binding.actvIngredient.text.clear()
             adapter.addIngredient(Ingredient(null, ingredient))
-            // adapter.submitList(adapter.selectedIngredients)
+        }
+
+        binding.btnFindRecipes.setOnClickListener {
+            thread {
+                val intentDetails = Intent()
+                var selectedIngredients = ""
+
+                AppDatabase.getInstance(this).ingredientDao().getAll().forEach{
+                    selectedIngredients += "${it.name},+"
+                }
+
+                intentDetails.setClass(this, RecipeListActivity::class.java)
+                intentDetails.putExtra(INGREDIENTS, selectedIngredients)
+                startActivity(intentDetails)
+            }
         }
 
         initRecyclerView()
-
-        binding.btnFindRecipes.setOnClickListener {
-            val intentDetails = Intent()
-
-            var selectedIngredients = ""
-            AppDatabase.getInstance(this).ingredientDao().getAll()
-                .observe(this, Observer { items ->
-                    items.forEach{
-                        selectedIngredients += "${it.name},+"
-                    }
-                })
-
-            intentDetails.setClass(this, RecipeListActivity::class.java)
-            intentDetails.putExtra(INGREDIENTS, selectedIngredients)
-            startActivity(intentDetails)
-        }
     }
 
     private fun initRecyclerView() {
-        adapter = IngredientAdapter(this)
-        binding.recyclerIngredients.adapter = adapter
+        thread {
+            val ingredients = AppDatabase.getInstance(this).ingredientDao().getAll()
 
-        val touchCallbackList = IngredientRecyclerTouchCallback(adapter)
-        val itemTouchHelper = ItemTouchHelper(touchCallbackList)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerIngredients)
+            runOnUiThread {
+                adapter = IngredientAdapter(this)
+                binding.recyclerIngredients.adapter = adapter
 
-        val ingredients = AppDatabase.getInstance(this).ingredientDao().getAll()
-        ingredients.observe(this, Observer { items ->
-            adapter.submitList(items)
-        })
+                val touchCallbackList = IngredientRecyclerTouchCallback(adapter)
+                val itemTouchHelper = ItemTouchHelper(touchCallbackList)
+                itemTouchHelper.attachToRecyclerView(binding.recyclerIngredients)
+
+                adapter.submitList(ingredients)
+            }
+        }
     }
 }
