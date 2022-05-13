@@ -3,7 +3,6 @@ package com.example.pantrypalette
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pantrypalette.adapters.IngredientAdapter
 import com.example.pantrypalette.adapters.RecipeAdapter
 import com.example.pantrypalette.api.RecipesAPI
 import com.example.pantrypalette.api.RecipesResult
@@ -39,8 +38,7 @@ class RecipeListActivity : AppCompatActivity() {
 
         // Find recipes from API based on user's ingredients
         val call = recipesAPI.getRecipes(
-            intent.getStringExtra(MainActivity.INGREDIENTS).toString(),
-            2
+            intent.getStringExtra(MainActivity.INGREDIENTS).toString()
         )
 
         call.enqueue(object : Callback<List<RecipesResult>> {

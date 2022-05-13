@@ -17,7 +17,7 @@ class IngredientAdapter(var context: Context) :
     ListAdapter<Ingredient, IngredientAdapter.ViewHolder>(IngredientDiffCallback()),
     IngredientTouchHelperCallback {
 
-    val selectedIngredients = mutableListOf<Ingredient>()
+    // val selectedIngredients = mutableListOf<Ingredient>()
 
     inner class ViewHolder(private var binding: IngredientBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ingr: Ingredient) {
@@ -43,14 +43,14 @@ class IngredientAdapter(var context: Context) :
         thread {
             AppDatabase.getInstance(context).ingredientDao().addIngredient(ingr)
         }
-        selectedIngredients.add(ingr)
+        // selectedIngredients.add(ingr)
     }
 
     fun deleteIngr(idx: Int) {
         thread {
             AppDatabase.getInstance(context).ingredientDao().deleteIngredient(getItem(idx))
         }
-        selectedIngredients.removeAt(idx)
+        // selectedIngredients.removeAt(idx)
     }
 
     override fun onDismissed(position: Int) {

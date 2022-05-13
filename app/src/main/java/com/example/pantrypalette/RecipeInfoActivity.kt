@@ -57,7 +57,7 @@ class RecipeInfoActivity : AppCompatActivity() {
                         .load(body?.image)
                         .into(binding.imgRecipe)
 
-                    binding.tvSource.text = "Source: ${body?.sourceName}"
+                    binding.tvSource.text = getString(R.string.source, body?.sourceName)
 
                     binding.btnURL.setOnClickListener {
                         val browserIntent =

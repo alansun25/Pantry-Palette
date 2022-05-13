@@ -3,9 +3,9 @@
     <string name="recipes_found">Recipes Found</string>
     <string name="title">Title</string>
     <string name="ingredient">Ingredient:</string>
-    <string name="search">Search...</string>
+    <string name="search">Search…</string>
     <string name="pantry">Your Pantry</string>
     <string name="findRecipes">Find Recipes</string>
     <string name="view">View Recipe</string>
-
+    <string name="source">Source: %1$s</string>
 </resources>

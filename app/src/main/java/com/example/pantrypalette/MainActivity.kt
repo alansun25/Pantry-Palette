@@ -3,6 +3,7 @@ package com.example.pantrypalette
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         const val INGREDIENTS = "INGREDIENTS"
     }
 
-    lateinit var binding : ActivityMainBinding
+    private lateinit var binding : ActivityMainBinding
     private lateinit var adapter: IngredientAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,9 +60,12 @@ class MainActivity : AppCompatActivity() {
             val intentDetails = Intent()
 
             var selectedIngredients = ""
-            adapter.selectedIngredients.forEach {
-                selectedIngredients += "${it.name},+"
-            }
+            AppDatabase.getInstance(this).ingredientDao().getAll()
+                .observe(this, Observer { items ->
+                    items.forEach{
+                        selectedIngredients += "${it.name},+"
+                    }
+                })
 
             intentDetails.setClass(this, RecipeListActivity::class.java)
             intentDetails.putExtra(INGREDIENTS, selectedIngredients)
